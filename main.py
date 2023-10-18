@@ -25,13 +25,22 @@ login_button.click()
 google_username_field = driver.find_element(By.ID, 'identifierId')
 google_username_field.send_keys(username)
 
-google_password_field = driver.find_element(By.ID, 'password_field_id')
+next_button = driver.find_element(By.CLASS_NAME, 'VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-k8QpJ VfPpkd-LgbsSe-OWXEXe-dgl2Hf nCP5yc AjY5Oe DuMIQc LQeN7 qIypjc TrZEUc lw1w4b')
+next_button.click()
+
+google_password_field = driver.find_element(By.CLASS_NAME, 'whsOnd zHQkBf')
 google_password_field.send_keys(password)
 
-login_button = driver.find_element(By.ID, 'login_button_id')
+login_button = driver.find_element(By.CLASS_NAME, 'VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-k8QpJ VfPpkd-LgbsSe-OWXEXe-dgl2Hf nCP5yc AjY5Oe DuMIQc LQeN7 qIypjc TrZEUc lw1w4b')
 login_button.click()
 
 #2FA
+try:
+  login_button = driver.find_element(By.CLASS_NAME, 'VfPpkd-LgbsSe VfPpkd-LgbsSe-OWXEXe-dgl2Hf ksBjEc lKxP2d LQeN7 uRo0Xe TrZEUc lw1w4b')
+  login_button.click()
+finally:
+  pass
+
 verification_code_field = WebDriverWait(driver, 10).until(
     EC.visibility_of_element_located((By.ID, 'verification_code_field_id')))
 
