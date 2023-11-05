@@ -12,6 +12,9 @@ def signinF():
   webbrowser.open('https://maranathahighschool.myschoolapp.com/app/student#studentmyday/progress')
   sm.current = 'home'
 
+def fetchGrade():
+  pass
+
 class signinScreen(Screen):
   def __init__(self,**kw):
     super(signinScreen, self).__init__(**kw)
@@ -21,10 +24,14 @@ class signinScreen(Screen):
       size=(165,120),
       pos_hint={'center_x':.5,'center_y':.5})
     signinButton.bind(on_press=partial(signinF))
+    reminder = Label(
+      text='do NOT close the tab after signed in',
+      pos_hint={'center_x':.5,'center_y':.6})
+    self.add_widget(reminder)
     self.add_widget(signinButton)
     
 class homeScreen(Screen):
-  pass
+  fetchGrade()
     
 class title(App):
   def build(self):
