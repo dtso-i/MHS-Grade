@@ -1,0 +1,10 @@
+{
+  "manifest_version": 3,
+  "name": "Color Changer Extension",
+  "version": "1.0",
+  "description": "Changes the background color of the current webpage.",
+  "permissions": ["activeTab"],
+  "action": {
+    "default_popup": "popup.html"
+    }
+}
