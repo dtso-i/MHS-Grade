@@ -3,12 +3,11 @@
   "name": "MHS Grades",
   "version": "1.0",
   "description": "Shows the grades in a graph",
-  "permissions": ["activeTab","Script"],
+  "permissions": ["activeTab","scripting","tabs"],
   "action": {
     "default_popup": "popup.html"
     },
   "background": {
-    "scripts": ["background.js"],
-    "persistent": false
+    "service_worker": "background.js"
   }
 }
