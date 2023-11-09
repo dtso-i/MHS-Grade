@@ -15,7 +15,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 });
 
 function processHTML(html){
-  console.log
+  window.alert(html)
   //filter the html
   //store data
   //make another html

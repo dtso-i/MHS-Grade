@@ -2,9 +2,12 @@
 document.addEventListener("DOMContentLoaded", function () {
   const openNewTabButton = document.getElementById("popoutButton");
   openNewTabButton.addEventListener("click", function () {
-    chrome.scripting.executeScript({
-      target: { tabId: (tabId) => tabId},
-      function: openNewTab
+    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+      const currentTabId = tabs[0].id;
+      chrome.scripting.executeScript({
+        target: { tabId: currentTabId},
+        function: openNewTab
+      });
     });
   });
 });
