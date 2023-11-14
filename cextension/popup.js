@@ -18,7 +18,7 @@ function openNewTab() {
 //get html on message_received === getHTML
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   if (message.action === 'getHTML') {
-    const html = document.documentElement.outerHTML;
+    const html = document.documentElement;
     chrome.runtime.sendMessage({ action: 'htmlResponse', html: html });
   }
 });
