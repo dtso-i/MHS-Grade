@@ -11,13 +11,21 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     chrome.tabs.create({ url: "http://localhost:8000" });
   }
   else if (request.action === 'htmlResponse') {
-    const filteredHTML = processHTML(request.html);
+    const filteredData = processData(request.grades, request.subjects);
   }
 });
 
-function processHTML(html){
-  console.log(html);
-  console.log(typeof html);
+function processData(grades, subjects){
+  grades.forEach(function(element) {
+    var grade = element.innerHTML;
+    console.log(grade);
+  });
+  subjects.forEach(function(element) {
+    var subject = element.innerHTML;
+    console.log(subject);
+  });
+  
+
   //filter the html
   //store data
   //make another html
