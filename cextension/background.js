@@ -15,18 +15,42 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   }
 });
 
-function processData(grades, subjects){
-  grades.forEach(function(element) {
+function processData(rgrades, rsubjects){
+  var grades,subjects = [];
+  var data = {};
+  console.log(typeof rgrades);
+  console.log(rgrades)
+  rgrades.forEach(function(element) {
     var grade = element.innerHTML;
+    grades.push(grade);
     console.log(grade);
   });
-  subjects.forEach(function(element) {
-    var subject = element.innerHTML;
-    console.log(subject);
-  });
-  
-
-  //filter the html
-  //store data
+  try {
+    rsubjects.forEach(function(element) {
+      var subject = element.innerHTML;
+      subjects.push(subject);
+      console.log(subject);
+      if (subjects.length == 7) throw breakException;
+    });
+  } catch (e) {
+    if (e !== BreakException) throw e;
+  }
+  for (var i = 0;i < 7;i++) {
+    const dgrade = grades[i];
+    const dsubject = subjects[i];
+    data[dsubject] = dgrade;
+  }
+  try {
+    chrome.storage.local.get(["counter"]).then((result) => {
+      let ecounter = result.key;
+      ecounter++;
+    });
+  } catch (e) {
+    console.log(`expected error? \n ${e}`);
+    const ecounter = 0;
+  }
+  chrome.storage.local.set({ecounter: {data: data, time: Date()}});
+  chrome.storage.local.set({"counter": ecounter});
+  console.log({ecounter: {data: data, time: Date()}});
   //make another html
 }

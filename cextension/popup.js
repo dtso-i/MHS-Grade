@@ -20,6 +20,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
   if (message.action === 'getHTML') {
     const grades = document.querySelectorAll("h3.showGrade");
     const subjects = document.querySelectorAll(".row .row .col-md-3 a");
+
     chrome.runtime.sendMessage({ action: 'htmlResponse', grades: grades , subjects: subjects});
   }
 });
