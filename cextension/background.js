@@ -1,7 +1,7 @@
 //sends getHTML on tab update
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status === 'complete' && tab.url && tab.url.startsWith('https:\/\/maranathahighschool.myschoolapp.com\/app\/student#studentmyday\/progress')) {
-    chrome.tabs.sendMessage(tabId, { action: 'getHTML' });
+    //chrome.tabs.sendMessage(tabId, { action: 'getHTML1' });
     console.log('target webite')
   }
 });
@@ -11,11 +11,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     chrome.tabs.create({ url: "http://localhost:8000" });
   }
   else if (request.action === 'htmlResponse') {
-    const filteredData = processData(request.grades, request.subjects);
+    console.log("html received");
+    const filteredData = processData(request.content[0], request.content[1]);
   }
 });
 
 function processData(rgrades, rsubjects){
+  console.log(rgrades,rsubjects)
   var grades,subjects = [];
   var data = {};
   console.log(typeof rgrades);

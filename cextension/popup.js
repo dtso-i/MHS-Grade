@@ -1,5 +1,5 @@
 //send message to open localhost:8000 on click
-document.addEventListener("DOMContentLoaded", function () {
+/*document.addEventListener("DOMContentLoaded", function () {
   const openNewTabButton = document.getElementById("popoutButton");
   openNewTabButton.addEventListener("click", function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -14,13 +14,11 @@ document.addEventListener("DOMContentLoaded", function () {
 function openNewTab() {
   chrome.runtime.sendMessage({ action: "openNewTab" });
 }
-
-//get html on message_received === getHTML
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-  if (message.action === 'getHTML') {
-    const grades = document.querySelectorAll("h3.showGrade");
-    const subjects = document.querySelectorAll(".row .row .col-md-3 a");
-
-    chrome.runtime.sendMessage({ action: 'htmlResponse', grades: grades , subjects: subjects});
-  }
+*/
+document.addEventListener("DOMContentLoaded", function () {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { action: "getHTML" }, function (response) {
+      chrome.runtime.sendMessage({ action: "htmlResponse" ,content: response});
+    });
+  });
 });
