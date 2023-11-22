@@ -14,12 +14,3 @@ document.addEventListener("DOMContentLoaded", function () {
 function openNewTab() {
   chrome.runtime.sendMessage({ action: "openNewTab" });
 }
-/*
-document.addEventListener("DOMContentLoaded", function () {
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { action: "getHTML" }, function (response) {
-      chrome.runtime.sendMessage({ action: "htmlResponse" ,content: response});
-    });
-  });
-});
-*/

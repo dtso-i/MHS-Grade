@@ -7,24 +7,26 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "openNewTab") {
-    chrome.tabs.create({ url: "http://localhost:8000" });
+    chrome.tabs.create({ url: "http://localhost:8000" }); //opens new tab to the link
   }
   else if (request.action === 'htmlResponse') {
-    const filteredData = processData(request.grades, request.subjects);
+    const filteredData = processData(request.grades, request.subjects); //sends semi-filtered data to processData
   }
 });
-function executeContentScript(tabId){
+
+function executeContentScript(tabId){ //executes content.js on the current tab
   chrome.scripting.executeScript({
     target: { tabId: tabId },
     files: ["content.js"],
   });
   console.log("script executed");
 }
-function processData(rgrades, rsubjects){
+function processData(rgrades, rsubjects){ //fully filters and stores data
   if (!(rgrades && rsubjects)){
     return
   }
-  let data = {};
+  var data = {};
+  let readyData = {};
   for(let i=0; i<rgrades.length;i++){
     rgrades[i] = rgrades[i].replace('%','');
     rgrades[i] = rgrades[i].replace(' ','');
@@ -37,19 +39,43 @@ function processData(rgrades, rsubjects){
     data[rsubjects[i]] = rgrades[i];
   }
   console.log(data);
+
+//untested below --------
+  window.webkitRequestFileSystem(window.PERSISTENT, 1024**2, function(fs) {
+    fs.root.getFile('data.json',function(fileEntry){
+      fileEntry.file(function(file) {
+        let reader = new FileReader();
+        reader.onloadend = function() {
+          var jsonData = JSON.parse(this.result);
+        };
+      })
+      fileEntry.createWriter(function(fileWriter) {
+        let count = Object.keys(jsonData).length++;
+        let writeData = {};
+        writeData[count] = {"data": data, "timestamp": Date()};
+        let data = new Blob([JSON.stringify(writeData)],{type: 'application/json'});
+        fileWriter.write(data);
+      })
+    })
+  })
+
+
 /*
   try {
     chrome.storage.local.get(["counter"]).then((result) => {
-      let ecounter = result.key;
-      ecounter++;
+      var ecounter = result.key++;
     });
   } catch (e) {
     console.log(`expected error? \n ${e}`);
-    const ecounter = 0;
+    var ecounter = 0;
   }
-  chrome.storage.local.set({ecounter: {data: data, time: Date()}});
+  readyData[ecounter] = {data: data, time: Date()};
+  chrome.storage.local.set(readyData);
   chrome.storage.local.set({"counter": ecounter});
-  console.log({ecounter: {data: data, time: Date()}});
+  console.log(readyData);
+  chrome.storage.local.get(["counter"]).then((result) => {
+    console.log(result.key);
+  });
+  console.log(chrome.storage.local.get([chrome.storage.local.get(["counter"])]))
 */
-  //make another html
 }
