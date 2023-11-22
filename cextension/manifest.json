@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "MHS Grades",
-  "version": "1.1",
+  "version": "1",
   "description": "Shows the grades in a graph",
   "permissions": ["activeTab","scripting","tabs","storage","declarativeContent"],
   "action": {

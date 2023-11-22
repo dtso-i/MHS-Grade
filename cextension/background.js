@@ -22,11 +22,10 @@ function executeContentScript(tabId){ //executes content.js on the current tab
   console.log("script executed");
 }
 function processData(rgrades, rsubjects){ //fully filters and stores data
-  if (!(rgrades && rsubjects)){
+  if (rgrades.length < 6){
     return
   }
   var data = {};
-  let readyData = {};
   for(let i=0; i<rgrades.length;i++){
     rgrades[i] = rgrades[i].replace('%','');
     rgrades[i] = rgrades[i].replace(' ','');
@@ -41,6 +40,7 @@ function processData(rgrades, rsubjects){ //fully filters and stores data
   console.log(data);
 
 //untested below --------
+/*
   window.webkitRequestFileSystem(window.PERSISTENT, 1024**2, function(fs) {
     fs.root.getFile('data.json',function(fileEntry){
       fileEntry.file(function(file) {
