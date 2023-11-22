@@ -3,7 +3,7 @@
   "name": "MHS Grades",
   "version": "1.1",
   "description": "Shows the grades in a graph",
-  "permissions": ["activeTab","scripting","tabs","storage"],
+  "permissions": ["activeTab","scripting","tabs","storage","declarativeContent"],
   "action": {
     "default_popup": "popup.html"
     },
@@ -12,7 +12,8 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://maranathahighschool.myschoolapp.com/app/student#studentmyday/progress"],
+      "run_at": "document_end",
+      "matches": ["<all_urls>"],
       "js": ["content.js"]
     }
   ]

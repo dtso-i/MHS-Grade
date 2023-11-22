@@ -1,5 +1,5 @@
 //send message to open localhost:8000 on click
-/*document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
   const openNewTabButton = document.getElementById("popoutButton");
   openNewTabButton.addEventListener("click", function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
@@ -14,7 +14,7 @@
 function openNewTab() {
   chrome.runtime.sendMessage({ action: "openNewTab" });
 }
-*/
+/*
 document.addEventListener("DOMContentLoaded", function () {
   chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
     chrome.tabs.sendMessage(tabs[0].id, { action: "getHTML" }, function (response) {
@@ -22,3 +22,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+*/

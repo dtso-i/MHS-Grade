@@ -1,9 +1,15 @@
-//get html on message_received === getHTML
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.action === "getHTML") {
-    window.alert("getHTML received")
-    const grades = document.querySelectorAll("h3.showGrade");
-    const subjects = document.querySelectorAll(".row .row .col-md-3 a");
-    sendResponse({ content: [grades,subjects] });
-  }
-});
+//get html on script execution and complete readyState, and sends it
+
+setTimeout(function() {
+  const grades = document.querySelectorAll("h3.showGrade");
+  const subjects = document.querySelectorAll(".row .row .col-md-3 a");
+  let filteredGrades = []
+  let filteredSubjects = []
+  Object.values(grades).forEach(function (element) {
+    filteredGrades.push(element.innerHTML);
+  })
+  Object.values(subjects).forEach(function (element) {
+    filteredSubjects.push(element.innerHTML);
+  })
+  chrome.runtime.sendMessage({action: "htmlResponse", grades: filteredGrades, subjects: filteredSubjects});
+}, 10000);

@@ -1,8 +1,7 @@
 //sends getHTML on tab update
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   if (changeInfo.status === 'complete' && tab.url && tab.url.startsWith('https:\/\/maranathahighschool.myschoolapp.com\/app\/student#studentmyday\/progress')) {
-    //chrome.tabs.sendMessage(tabId, { action: 'getHTML1' });
-    console.log('target webite')
+    executeContentScript(tabId);
   }
 });
 
@@ -11,37 +10,34 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     chrome.tabs.create({ url: "http://localhost:8000" });
   }
   else if (request.action === 'htmlResponse') {
-    console.log("html received");
-    const filteredData = processData(request.content[0], request.content[1]);
+    const filteredData = processData(request.grades, request.subjects);
   }
 });
-
-function processData(rgrades, rsubjects){
-  console.log(rgrades,rsubjects)
-  var grades,subjects = [];
-  var data = {};
-  console.log(typeof rgrades);
-  console.log(rgrades)
-  rgrades.forEach(function(element) {
-    var grade = element.innerHTML;
-    grades.push(grade);
-    console.log(grade);
+function executeContentScript(tabId){
+  chrome.scripting.executeScript({
+    target: { tabId: tabId },
+    files: ["content.js"],
   });
-  try {
-    rsubjects.forEach(function(element) {
-      var subject = element.innerHTML;
-      subjects.push(subject);
-      console.log(subject);
-      if (subjects.length == 7) throw breakException;
-    });
-  } catch (e) {
-    if (e !== BreakException) throw e;
+  console.log("script executed");
+}
+function processData(rgrades, rsubjects){
+  if (!(rgrades && rsubjects)){
+    return
   }
-  for (var i = 0;i < 7;i++) {
-    const dgrade = grades[i];
-    const dsubject = subjects[i];
-    data[dsubject] = dgrade;
+  let data = {};
+  for(let i=0; i<rgrades.length;i++){
+    rgrades[i] = rgrades[i].replace('%','');
+    rgrades[i] = rgrades[i].replace(' ','');
+    rgrades[i] = rgrades[i].replace(' ','');
+    rsubjects[i] = rsubjects[i].replace('<h3>','');
+    rsubjects[i] = rsubjects[i].replace('</h3>','');
   }
+  rsubjects.splice(rgrades.length+1,rsubjects.length-rgrades.length)
+  for(let i=0; i<rgrades.length; i++){
+    data[rsubjects[i]] = rgrades[i];
+  }
+  console.log(data);
+/*
   try {
     chrome.storage.local.get(["counter"]).then((result) => {
       let ecounter = result.key;
@@ -54,5 +50,6 @@ function processData(rgrades, rsubjects){
   chrome.storage.local.set({ecounter: {data: data, time: Date()}});
   chrome.storage.local.set({"counter": ecounter});
   console.log({ecounter: {data: data, time: Date()}});
+*/
   //make another html
 }
