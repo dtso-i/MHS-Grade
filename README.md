@@ -1,6 +1,4 @@
 # To-do
-- chrome extension
-- gets the html when the mymhs is on
-- filter the html to get grades
+- fix content.js to wait for document.readyState === "complete" or DOMContentLoaded
 - store the data locally
 - function: pop out into another page
