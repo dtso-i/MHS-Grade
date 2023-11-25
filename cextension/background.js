@@ -24,6 +24,15 @@ function executeContentScript(tabId){ //executes content.js on the current tab
 function processData(rgrades, rsubjects){ //fully filters and stores data
   if (rgrades.length < 6){
     return
+  } else {
+    try { // non first time
+      let json = fetch('data.json') //object
+      .then(response => response.json())
+      .catch(error => {return error});
+      var color = Object.values(Object.keys(Object.keys(json)[Object.keys(json).length-1].data))
+    } catch { // first time
+      var color = ['#ff6485','#34a0eb','#ffcc57','#4cc0c1','#9a67fe','#c9cbce','#ff9f3f'];
+    }
   }
   var data = {};
   for(let i=0; i<rgrades.length;i++){
@@ -34,9 +43,13 @@ function processData(rgrades, rsubjects){ //fully filters and stores data
     rsubjects[i] = rsubjects[i].replace('</h3>','');
   }
   rsubjects.splice(rgrades.length+1,rsubjects.length-rgrades.length)
+  let subject = {};
   for(let i=0; i<rgrades.length; i++){
-    data[rsubjects[i]] = rgrades[i];
+    subject[rsubjects[i]] = color[i];
+    data[subject] = rgrades[i];
+    subject = {};
   }
+  //object data = {{{subject:color}:grade},{{subject:color}:grade},{{subject:color}:grade}}
   console.log(data);
 
 //untested below --------
@@ -50,9 +63,10 @@ function processData(rgrades, rsubjects){ //fully filters and stores data
         };
       })
       fileEntry.createWriter(function(fileWriter) {
-        let count = Object.keys(jsonData).length++;
+        let count = Object.keys(jsonData).length;
         let writeData = {};
-        writeData[count] = {"data": data, "timestamp": Date()};
+        let date = Date().split(' ');
+        writeData[count] = {"data": data, "timestamp": `${date[2]} ${date[1]} ${date[3]}, ${date[4]}(${date[5]})`};
         let data = new Blob([JSON.stringify(writeData)],{type: 'application/json'});
         fileWriter.write(data);
       })
