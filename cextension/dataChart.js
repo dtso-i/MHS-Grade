@@ -1,6 +1,6 @@
 //fetch data from data.json
 function fetchJSON(){
-  return fetch('data.json')
+  return fetch('data.json') // object
   .then(response => response.json())
   .catch(error => {return error});
 }

@@ -7,7 +7,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.action === "openNewTab") {
-    chrome.tabs.create({ url: "http://localhost:8000" }); //opens new tab to the link
+    chrome.tabs.create(".\\newTab\\popup.html"); //opens new tab to the link
   }
   else if (request.action === 'htmlResponse') {
     const filteredData = processData(request.grades, request.subjects); //sends semi-filtered data to processData
