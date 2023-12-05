@@ -35,14 +35,15 @@ function processData(rgrades, rsubjects){ //fully filters and stores data
     }
   }
   var data = {};
-  for(let i=0; i<rgrades.length;i++){
+  for(let i=0; i<7;i++){
     rgrades[i] = rgrades[i].replace('%','');
     rgrades[i] = rgrades[i].replace(' ','');
     rgrades[i] = rgrades[i].replace(' ','');
     rsubjects[i] = rsubjects[i].replace('<h3>','');
     rsubjects[i] = rsubjects[i].replace('</h3>','');
   }
-  rsubjects.splice(rgrades.length+1,rsubjects.length-rgrades.length)
+  rsubjects.splice(rgrades.length,rsubjects.length-rgrades.length)
+  console.log(rsubjects,rgrades);
   let subject = {};
   for(let i=0; i<rgrades.length; i++){
     subject[rsubjects[i]] = color[i];
