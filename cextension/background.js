@@ -1,8 +1,9 @@
-//sends getHTML on tab update
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-  if (changeInfo.status === 'complete' && tab.url && tab.url.startsWith('https:\/\/maranathahighschool.myschoolapp.com\/app\/student#studentmyday\/progress')) {
-    executeContentScript(tabId);
-  }
+//sends getHTML on tab update if 
+chrome.tabs.onActivated.addListener(function (activeInfo) { //changeInfo, tab
+  chrome.tabs.query({status: 'complete',url:'https:\/\/maranathahighschool.myschoolapp.com\/app\/student#studentmyday\/progress'}, ([tab]) => {
+    executeContentScript(activeInfo.tabId);
+    //console.log(tab.url);
+  })
 });
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
@@ -22,7 +23,7 @@ function executeContentScript(tabId){ //executes content.js on the current tab
   console.log("script executed");
 }
 function processData(rgrades, rsubjects){ //fully filters and stores data
-  if (rgrades.length < 6){
+  if (rgrades.length < 6 || !(rgrades) || typeof rgrades === "undefined"){
     return
   } else {
     try { // non first time
@@ -34,8 +35,7 @@ function processData(rgrades, rsubjects){ //fully filters and stores data
       var color = ['#ff6485','#34a0eb','#ffcc57','#4cc0c1','#9a67fe','#c9cbce','#ff9f3f'];
     }
   }
-  var data = {};
-  for(let i=0; i<7;i++){
+  for(let i=0; i<rgrades.length;i++){
     rgrades[i] = rgrades[i].replace('%','');
     rgrades[i] = rgrades[i].replace(' ','');
     rgrades[i] = rgrades[i].replace(' ','');
@@ -44,13 +44,14 @@ function processData(rgrades, rsubjects){ //fully filters and stores data
   }
   rsubjects.splice(rgrades.length,rsubjects.length-rgrades.length)
   console.log(rsubjects,rgrades);
-  let subject = {};
+  var data = [];
   for(let i=0; i<rgrades.length; i++){
-    subject[rsubjects[i]] = color[i];
-    data[subject] = rgrades[i];
-    subject = {};
+    let entry = {};
+    let subject = JSON.stringify({[rsubjects[i]]: color[i]});
+    entry[subject] = rgrades[i];
+    data.push(entry)
   }
-  //object data = {{{subject:color}:grade},{{subject:color}:grade},{{subject:color}:grade}}
+  //object data = [{{subject:color}:grade},{{subject:color}:grade},{{subject:color}:grade}]
   console.log(data);
 
 //untested below --------
