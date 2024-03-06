@@ -14,3 +14,9 @@ document.addEventListener("DOMContentLoaded", function () {
 function openNewTab() {
   chrome.runtime.sendMessage({ action: "openNewTab" });
 }
+
+chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
+  if(request.action == "dataStored"){
+    //w
+  }
+})

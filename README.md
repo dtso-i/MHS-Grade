@@ -1,7 +1,7 @@
 # To-do
-
-- store the data locally
+- store the data to chrome.storage.local
   - store subject colors
+
 - popout button: pop out into another page
   - make another html(similar to popup.html)
   - change opennewtab to just open html file
@@ -16,3 +16,5 @@
   - google form
 - add data analysis (analytical computing)
 - talk to Mr. Almena for advertising
+
+- change to tsc maybe
