@@ -1,52 +1,47 @@
 var rawdata = getData();
-if(typeof rawdata === "undefined"){
+if(rawdata[0].timestamp.length < 0){
   //no data
-}
+}else{structGraph(rawdata)}
 
-let data = rawdata[0];
-let settings = rawdata[1];
+function structGraph(rawdata){
+  let data = rawdata[0];
+  let settings = rawdata[1];
+  let setGradesRaw = data.grades;
+  let setTimestamp = data.timestamp;
+  let subjects = data.subjects;
 
-
-var setGrades = filteredData[0];
-var setTimestamp = filteredData[1];
-var subjectColors = filteredData[2];
-var gradeSets = [];
-for (let i=0;i<Object.keys(setGrades).length;i++){ //for loop for setGrades to make it suitable for datasets
-  let gradeSet = {};
-  gradeSet[label] = Object.keys(setGrades[i])[0]; //subject
-  gradeSet[data] = (typeof Object.values(setGrades[i])[0] === "object") ? Object.values(Object.values(setGrades[i])[0]) : Object.values(setGrades[i])[0]; //grades
-  gradeSet[borderColor] = subjectColors[i];
-  gradeSets.push(gradeSet);
-}
-const ctx = document.getElementById('gradeChart');
-new Chart(ctx, {
-  type: settings,//-------------------------
-  data: {
-    labels: function (){
-      let setCount = [];
-      for (let i=1;i<setTimestamp.length++;i++){
-        setCount.push(i);
-      }
-      return setCount;
+  let setGrades = [];
+  for (let i=0;i<subjects.length;i++){ //for loop for setGrades to make it suitable for datasets
+    let grade = {};
+    grade.label = subjects[i];
+    grade.data = setGradesRaw[i];
+    grade.borderColor = settings.color[i];
+    grade.backgroundColor = settings.graphColor;
+    setGrades.push(grade);
+  }
+  const ctx = document.getElementById('gradeChart');
+  new Chart(ctx, {
+    type: settings.type,
+    data: {
+      labels: setTimestamp,
+      datasets: setGrades
     },
-    datasets: gradeSets
-  },
-  options: {
-    legend: {display: false}, //create legend separately with a func to option colors for each subjects
-    plugins: {
-      tooltip: {
-        enabled: true,
-        callback: {
-           label: function (context){
-            let index = context.dataset.dataIndex;
-            return setTimestamp[index];
+    options: {
+      legend: {display: false}, //create legend separately with a func to option colors for each subjects
+      plugins: {
+        tooltip: {
+          enabled: true,
+          callback: {
+            label: function (context){
+              let index = context.dataset.dataIndex;
+              return setTimestamp[index];
+            }
           }
         }
       }
     }
-  }
-})
-
+  })
+}
 
 function getData(){ //note: show "timestamp" on hover of a data point
   let data = [];
