@@ -17,6 +17,6 @@ function openNewTab() {
 
 chrome.runtime.onMessage.addListener(function(request,sender,sendResponse){
   if(request.action == "dataStored"){
-    //w
+    console.log('data stored');
   }
 })
