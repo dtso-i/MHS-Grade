@@ -11,10 +11,7 @@ chrome.tabs.onUpdated.addListener(function(tabId,changeInfo,tab){ //on link chan
 })
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.action === "openNewTab") {
-    chrome.tabs.create(".\\newTab\\popup.html"); //opens new tab to the link
-  }
-  else if (request.action === 'htmlResponse') {
+  if (request.action === 'htmlResponse') {
     processData(request.grades, request.subjects); //sends semi-filtered data to processData
   }
 });
