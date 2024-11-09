@@ -5,7 +5,7 @@ if(rawdata[0].timestamp.length < 0){
 
 /*  let data = rawdata[0];
 let settings = rawdata[1];*/
-let data = {grades:[[95,89,94],[97,93,89],[93,91,96]],subjects:["English","Math","AP CS"],timestamp:['ts1','ts2','ts3']};
+let data = {grades:[[101,89,94],[97,93,89],[93,91,96]],subjects:["English","Math","AP CS"],timestamp:['ts1','ts2','ts3']};
 let settings = {type:'line',color:['#ff6485', '#34a0eb', '#ffcc57', '#4cc0c1', '#9a67fe', '#c9cbce', '#ff9f3f'],theme:'#191819',graphColor:'#1f1f1f'};
 let setGradesRaw = data.grades;
 let setTimestamp = data.timestamp;

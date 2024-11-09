@@ -50,7 +50,7 @@ async function storeData(newData){ //stores data
     try{
       let glength = result.data.grades.length;
       if(JSON.stringify(result.data.subject)!==JSON.stringify(newData.subjects)){
-        //changed subjects midway
+        //changed subjects midway, prompt user for confirmation to start new subject
       }
       let notRepeated = false;
       for(let i=0;i<glength;i++){ //compare data

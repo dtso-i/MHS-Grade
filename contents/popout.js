@@ -1,6 +1,5 @@
 //send message to open localhost:8000 on click
 function pbtn(){
-  document.getElementById('pr').innerHTML = "bbbbbbbbbb";
   window.open('http://localhost:8000');
 }
 
