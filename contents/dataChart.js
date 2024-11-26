@@ -1,3 +1,4 @@
+import Chart from '/chart.js/auto'
 /*var rawdata = getData();
 if(rawdata[0].timestamp.length < 0){
   //no data

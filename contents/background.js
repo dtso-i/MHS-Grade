@@ -21,7 +21,7 @@ function executeContentScript(tabId){ //executes content.js on the current tab
     target: { tabId: tabId },
     files: ["content.js"],
   });
-  console.log("* script executed");
+  console.log(`* content.js executed on ${tabId}`);
 }
 
 function processData(rgrades, rsubjects){ //fully filters data
@@ -68,7 +68,7 @@ async function storeData(newData){ //stores data
         return 'repeated';
       }
       let ntimestamps = result.data.timestamps;
-      ntimestamps.push(`${time[2]} ${time[1]} ${time[3]} ${time[0]}`)
+      ntimestamps.push(`${time[4]} ${time[2]} ${time[1]} ${time[3]}`)
 
       finalData.grades = grade;
       finalData.subjects = result.data.subjects;
@@ -77,7 +77,7 @@ async function storeData(newData){ //stores data
       for(let i=0;i<newData.grades.length;i++){
         grade[i].push([newData.grades[i]]);
       }
-      let ntimestamps = [`${time[2]} ${time[1]} ${time[3]} ${time[0]}`];
+      let ntimestamps = [`${time[4]} ${time[2]} ${time[1]} ${time[3]}`];
       
       finalData.grades = grade;
       finalData.subjects = newData.subjects;
