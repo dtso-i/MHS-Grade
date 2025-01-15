@@ -10,7 +10,13 @@ MHS Grade is a chrome extension that allows students to view their grades in a m
    git clone https://github.com/Alwaysprogram/MHS-Grade.git
    ```
 
-2. Build the project or run dev
+2. Install the dependencies
+
+   ```bash
+    npm install
+    ```
+
+3. Build the project or run dev
 
    ```bash
    npm run build
@@ -24,7 +30,7 @@ MHS Grade is a chrome extension that allows students to view their grades in a m
 
 > Note: `npm run dev` will not minify the code
 
-3. Load the extension
+4. Load the extension
 
 - Open Chrome
 - Go to `chrome://extensions/`
