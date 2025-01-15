@@ -33,6 +33,12 @@ MHS Grade is a chrome extension that allows students to view their grades in a m
 - Select the `dist` folder
 - The extension should now be loaded
 
+## Development
+
+This project uses ES-Lint and Prettier for code formatting. Make sure to run `npm run lint` before pushing any changes.
+
+> Note: You can also use the ESLint and Prettier extensions in your editor to automatically format the code.
+
 ## Technologies
 
 - HTML/CSS/JS
