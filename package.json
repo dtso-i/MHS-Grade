@@ -1,10 +1,23 @@
 {
   "scripts": {
+    "dev": "npm run build:clean && npm run build:copy && npm run build:css",
+    "build": "npm run build:clean && npm run build:copy && npm run build:css:min",
+    "build:clean": "rm -rf dist",
+    "build:css": "tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/style.css",
+    "build:css:min": "tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/style.css --minify",
+    "build:copy": "cp -R ./src ./dist && rm ./dist/styles/tailwind.css",
     "lint": "eslint",
     "format": "prettier --write ."
   },
   "devDependencies": {
     "eslint": "^9.18.0",
     "prettier": "^3.4.2"
+  },
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.10",
+    "autoprefixer": "^10.4.20",
+    "cssnano": "^7.0.6",
+    "postcss": "^8.5.1",
+    "tailwindcss": "^3.4.17"
   }
 }
