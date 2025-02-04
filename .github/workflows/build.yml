@@ -27,7 +27,7 @@ jobs:
         run: zip -r dist.zip ./dist && rm -rf ./dist
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist-package
           path: dist.zip
