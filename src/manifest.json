@@ -4,9 +4,9 @@
   "icons": {
     "64":"./assets/logo.png"
   },
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "MHS Grade is a chrome extension that allows students to track their performance in a more organized and visually appealing way",
-  "options_page": "/popup/options.html",
+  "options_page": "/interface/options.html",
   "permissions": [
     "activeTab",
     "scripting",
@@ -19,7 +19,7 @@
     "<all_urls>"
   ],
   "action": {
-    "default_popup": "/popup/popup.html"
+    "default_popup": "/interface/popup.html"
   },
   "background": {
     "service_worker": "/background/background.js"
