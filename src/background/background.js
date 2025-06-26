@@ -157,23 +157,21 @@ async function storeData(newData) {
     finalData.timestamps = timestamps;
   } catch (error) {
     console.warn('Error: ', error);
-    if(!existingData) {
-      for (let i = 0; i < newData.grades.length; i++) {
-        grade[i].push(newData.grades[i]);
-      }
-
-      finalData.grades = grade;
-      finalData.subjects = newData.subjects;
-      finalData.timestamps = [formattedTimestamp];
-
-      const defaultSettings = {
-        colors: DEFAULT_COLORS,
-        theme: DEFAULT_THEME,
-      };
-
-      // Save default settings to local storage
-      await chrome.storage.local.set({ settings: defaultSettings });
+    for (let i = 0; i < newData.grades.length; i++) {
+      grade[i].push(newData.grades[i]);
     }
+
+    finalData.grades = grade;
+    finalData.subjects = newData.subjects;
+    finalData.timestamps = [formattedTimestamp];
+
+    const defaultSettings = {
+      colors: DEFAULT_COLORS,
+      theme: DEFAULT_THEME,
+    };
+
+    // Save default settings to local storage
+    await chrome.storage.local.set({ settings: defaultSettings });
   }
 
   // Save updated data to local storage

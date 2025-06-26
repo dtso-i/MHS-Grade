@@ -2,7 +2,8 @@
  * @fileoverview This file is responsible for getting the html of the page and sending it to the background script.
  */
 
-const WAIT_TIME = 2000; // Time to wait before checking if the page is ready
+// eslint-disable-next-line prefer-const
+let WAIT_TIME = 2000; // Time to wait before checking if the page is ready
 
 /**
  * @function waitReady
