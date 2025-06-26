@@ -2,10 +2,8 @@
  * @fileoverview Background script for the extension.
  */
 
-const MIN_GRADES_REQUIRED = 6; // Minimum number of grades required to process data
 const MY_MHS_URL =
   'https:\/\/maranathahighschool.myschoolapp.com\/app\/student#studentmyday\/progress';
-const WEEK_DAYS = 7; // Assuming the `grade` array's length represents days of the week
 const DEFAULT_COLORS = [
   '#ff6485',
   '#34a0eb',
@@ -15,7 +13,7 @@ const DEFAULT_COLORS = [
   '#c9cbce',
   '#ff9f3f',
 ];
-const DEFAULT_THEME = '#';
+const DEFAULT_THEME = '#1f1e1e';
 
 // Listen for tab changes
 chrome.tabs.onActivated.addListener((activeInfo) => {
@@ -24,7 +22,7 @@ chrome.tabs.onActivated.addListener((activeInfo) => {
       status: 'complete',
       url: MY_MHS_URL,
     },
-    (tabs) => {
+    () => {
       executeContentScript(activeInfo.tabId);
     },
   );
@@ -42,7 +40,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 
 // Listen for messages from the content script
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request) => {
   if (request.action === 'htmlResponse') {
     processData(request.grades, request.subjects); // Send semi-processed data to be fully processed
   }
@@ -75,7 +73,6 @@ function executeContentScript(tabId) {
  */
 function processData(rgrades, rsubjects) {
   if (
-    rgrades.length < MIN_GRADES_REQUIRED ||
     !rgrades ||
     typeof rgrades === 'undefined'
   ) {
@@ -90,8 +87,7 @@ function processData(rgrades, rsubjects) {
     }
     rsubjects.splice(rgrades.length, rsubjects.length - rgrades.length);
     const data = { subjects: rsubjects, grades: rgrades };
-    console.log(data);
-    // storeData(data);
+    storeData(data);
   }
 }
 
@@ -106,13 +102,14 @@ async function storeData(newData) {
 
   // Fetch existing data from local storage
   const result = await chrome.storage.local.get(['data']);
-  const grade = Array.from({ length: WEEK_DAYS }, () => []); // Initialize grade array
+  const grade = Array.from({ length: newData.subjects.length }, () => []); // Initialize grade array
 
   const currentTime = new Date();
   const formattedTimestamp = `${currentTime.getFullYear()} ${currentTime.toLocaleString(
     'default',
-    { month: 'short' },
-  )} ${currentTime.getDate()} ${currentTime.toTimeString().split(' ')[0]}`;
+    { month: 'short' }
+  // eslint-disable-next-line no-magic-numbers
+  )} ${currentTime.getDate()} ${currentTime.toTimeString().split(' ')[0].slice(0,-3)}`;
 
   try {
     const existingData = result.data;
@@ -133,50 +130,50 @@ async function storeData(newData) {
       // (Insert confirmation logic here)
     }
 
-    let dataChanged = false;
-
     // Compare new grades with existing grades
+    let changed = false;
     for (let i = 0; i < existingGrades.length; i++) {
       grade[i] = existingGrades[i];
       if (
         existingGrades[i][existingGrades[i].length - 1] !== newData.grades[i]
       ) {
-        dataChanged = true;
+        changed = true; // Reset repeated flag if any grade has changed
       }
     }
-
-    if (!dataChanged) {
-      return 'repeated'; // No changes detected, return early
+    if (changed) {
+      // Append new grades
+      for (let i = 0; i < existingGrades.length; i++) {
+        grade[i].push(newData.grades[i]);
+      }
+      // Update timestamps
+      timestamps.push(formattedTimestamp);
+    } else {
+      timestamps[timestamps.length - 1] = formattedTimestamp; // Update last timestamp
+      console.warn('* Grades have not changed, no new data to store.');
     }
-
-    // Append new grades
-    for (let i = 0; i < existingGrades.length; i++) {
-      grade[i].push(newData.grades[i]);
-    }
-
-    // Update timestamps
-    timestamps.push(formattedTimestamp);
 
     finalData.grades = grade;
     finalData.subjects = existingSubjects;
     finalData.timestamps = timestamps;
   } catch (error) {
-    // First-time setup or missing data
-    for (let i = 0; i < newData.grades.length; i++) {
-      grade[i].push(newData.grades[i]);
+    console.warn('Error: ', error);
+    if(!existingData) {
+      for (let i = 0; i < newData.grades.length; i++) {
+        grade[i].push(newData.grades[i]);
+      }
+
+      finalData.grades = grade;
+      finalData.subjects = newData.subjects;
+      finalData.timestamps = [formattedTimestamp];
+
+      const defaultSettings = {
+        colors: DEFAULT_COLORS,
+        theme: DEFAULT_THEME,
+      };
+
+      // Save default settings to local storage
+      await chrome.storage.local.set({ settings: defaultSettings });
     }
-
-    finalData.grades = grade;
-    finalData.subjects = newData.subjects;
-    finalData.timestamps = [formattedTimestamp];
-
-    const defaultSettings = {
-      color: DEFAULT_COLORS,
-      theme: DEFAULT_THEME,
-    };
-
-    // Save default settings to local storage
-    await chrome.storage.local.set({ settings: defaultSettings });
   }
 
   // Save updated data to local storage

@@ -3,7 +3,7 @@
  */
 
 // Listen for messages from the background script
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener((request) => {
   if (request.action === 'dataStored') {
     console.log('data stored');
   }

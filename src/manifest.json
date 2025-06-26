@@ -1,7 +1,10 @@
 {
   "manifest_version": 3,
   "name": "MHS Grades",
-  "version": "1",
+  "icons": {
+    "64":"./assets/logo.png"
+  },
+  "version": "1.0",
   "description": "Shows your current grades from myMHS in a graph",
   "options_page": "/popup/options.html",
   "permissions": [

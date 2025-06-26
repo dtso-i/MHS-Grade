@@ -1,0 +1,19 @@
+{
+  "data":{
+    "grades": [[88,91],[93,89],[90,97],[82,87],[87,87],[88,92]],
+    "subjects": ["AP Physics C","Worship Design","Theatre 3","AP Latin","AP Music Theory","English 10"],
+    "timestamps": ["2025 Feb 25 20:01", "2025 Apr 13 16:38"]
+  },
+  "settings":{
+    "colors": [
+      "#ff6485",
+      "#34a0eb",
+      "#ffcc57",
+      "#4cc0c1",
+      "#9a67fe",
+      "#c9cbce",
+      "#ff9f3f"
+    ],
+    "theme": "light"
+  }
+}
