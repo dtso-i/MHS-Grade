@@ -2,8 +2,6 @@
  * @fileoverview This file is responsible for getting the html of the page and sending it to the background script.
  */
 
-// eslint-disable-next-line prefer-const
-let WAIT_TIME = 2000; // Time to wait before checking if the page is ready
 
 /**
  * @function waitReady
@@ -27,7 +25,8 @@ function waitReady() {
       subjects: filteredSubjects,
     });
   } else {
-    window.setTimeout(waitReady, WAIT_TIME);
+    // eslint-disable-next-line no-magic-numbers
+    window.setTimeout(waitReady, 2000); //wait time 2000 ms
   }
 }
 

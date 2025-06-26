@@ -36,6 +36,11 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
     tab.url.startsWith(MY_MHS_URL)
   ) {
     executeContentScript(tabId);
+  } else if(
+    tab.url.startsWith('chrome://') ||
+    tab.url.startsWith('brave://')
+  ) {
+    return; // Ignore Chrome internal pages (chrome:// pages)
   }
 });
 
