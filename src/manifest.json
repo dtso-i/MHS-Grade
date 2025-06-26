@@ -5,7 +5,7 @@
     "64":"./assets/logo.png"
   },
   "version": "1.0",
-  "description": "Shows your current grades from myMHS in a graph",
+  "description": "MHS Grade is a chrome extension that allows students to track their performance in a more organized and visually appealing way, predict future trends of a student's grades, and provides goal-setting features.",
   "options_page": "/popup/options.html",
   "permissions": [
     "activeTab",
