@@ -15,6 +15,8 @@ const DEFAULT_COLORS = [
 ];
 const DEFAULT_THEME = 'light';
 
+console.log('Running background.js');
+
 // Listen for tab changes
 chrome.tabs.onActivated.addListener((activeInfo) => {
   chrome.tabs.query(
@@ -140,7 +142,8 @@ async function storeData(newData) {
     for (let i = 0; i < existingGrades.length; i++) {
       grade[i] = existingGrades[i];
       if (
-        existingGrades[i][existingGrades[i].length - 1] !== newData.grades[i]
+        existingGrades[i][existingGrades[i].length - 1] !== newData.grades[i] &&
+        newData.grades[i] !== ''
       ) {
         changed = true; // Reset repeated flag if any grade has changed
       }
@@ -153,7 +156,7 @@ async function storeData(newData) {
       // Update timestamps
       timestamps.push(formattedTimestamp);
     } else {
-      console.warn('* Grades have not changed, no new data to store.');
+      console.log('* Grades have not changed, no new data to store.');
       return 'no change';
     }
 
