@@ -1,0 +1,10 @@
+{
+  "light": {
+    "bkgColor": "#a08e86",
+    "fontColor": "#666771"
+  },
+  "dark": {
+    "bkgColor": "#1f1e1e",
+    "fontColor": "#dbddde"
+  }
+}

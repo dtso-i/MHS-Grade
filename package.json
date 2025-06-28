@@ -3,9 +3,9 @@
     "dev": "npm run build:clean && npm run build:copy && npm run build:css",
     "build": "npm run build:clean && npm run build:copy && npm run build:css:min",
     "build:clean": "rm -rf dist",
-    "build:css": "tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/style.css",
-    "build:css:min": "tailwindcss -i ./src/styles/tailwind.css -o ./dist/styles/style.css --minify",
-    "build:copy": "cp -R ./src ./dist && rm ./dist/styles/tailwind.css",
+    "build:css": "tailwindcss -i ./src/interface/styles/tailwind.css -o ./dist/styles/style.css",
+    "build:css:min": "tailwindcss -i ./src/interface/styles/tailwind.css -o ./dist/styles/style.css --minify",
+    "build:copy": "cp -R ./src ./dist && rm ./dist/interface/styles/tailwind.css",
     "lint": "eslint",
     "format": "prettier --write ."
   },

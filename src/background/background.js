@@ -13,7 +13,7 @@ const DEFAULT_COLORS = [
   '#c9cbce',
   '#ff9f3f',
 ];
-const DEFAULT_THEME = '#1f1e1e';
+const DEFAULT_THEME = 'light';
 
 // Listen for tab changes
 chrome.tabs.onActivated.addListener((activeInfo) => {
@@ -110,7 +110,7 @@ async function storeData(newData) {
   const grade = Array.from({ length: newData.subjects.length }, () => []); // Initialize grade array
 
   const currentTime = new Date();
-  const formattedTimestamp = `${currentTime.getFullYear()} ${currentTime.toLocaleString(
+  const formattedTimestamp = `${currentTime.toLocaleString(
     'default',
     { month: 'short' }
   // eslint-disable-next-line no-magic-numbers
@@ -153,8 +153,8 @@ async function storeData(newData) {
       // Update timestamps
       timestamps.push(formattedTimestamp);
     } else {
-      timestamps[timestamps.length - 1] = formattedTimestamp; // Update last timestamp
       console.warn('* Grades have not changed, no new data to store.');
+      return 'no change';
     }
 
     finalData.grades = grade;
@@ -162,6 +162,8 @@ async function storeData(newData) {
     finalData.timestamps = timestamps;
   } catch (error) {
     console.warn('Error: ', error);
+
+    // First-time use, no existing data found
     for (let i = 0; i < newData.grades.length; i++) {
       grade[i].push(newData.grades[i]);
     }
