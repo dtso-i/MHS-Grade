@@ -63,7 +63,7 @@ function executeContentScript(tabId) {
   try {
     chrome.scripting.executeScript({
       target: { tabId: tabId },
-      files: ['content-scripts/content.js'],
+      files: ['contentScripts/content.js'],
     });
   } catch (error) {
     console.error('Error executing content script:', error);
@@ -81,7 +81,8 @@ function executeContentScript(tabId) {
 function processData(rgrades, rsubjects) {
   if (
     !rgrades ||
-    typeof rgrades === 'undefined'
+    typeof rgrades === 'undefined' ||
+    rgrades.length === 0
   ) {
     return;
   } else {
