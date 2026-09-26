@@ -12,8 +12,6 @@
     "scripting",
     "tabs",
     "storage",
-    "declarativeContent",
-    "identity"
   ],
   "host_permissions": [
     "<all_urls>"
