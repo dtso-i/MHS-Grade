@@ -6,6 +6,9 @@ MHS Grade is a chrome extension that allows students to track their performance 
 
 - **Performance Tracking & Visualization:** Simple and interactive interface to track a student's grades.
 - **GPA Calculation** Calculates weighted and unweighted GPA automatically.
+
+## Upcoming Features
+
 - **Grade Prediction** Predicts grades using linear regression, a simple predictive algorithm based on past entries.
 - **Automatic Grade Input** Crawls the progress page in myMHS for automatic grade input.
 - **Goal Setting** Set and track academic goals such as GPA targets and subject-specific goals.
@@ -15,7 +18,7 @@ MHS Grade is a chrome extension that allows students to track their performance 
 1. Clone the repository
 
    ```bash
-   git clone https://github.com/Alwaysprogram/MHS-Grade.git
+   git clone https://github.com/dtso-i/MHS-Grade.git
    ```
 
 2. Install the dependencies
