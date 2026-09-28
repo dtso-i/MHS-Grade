@@ -2,20 +2,13 @@
   "manifest_version": 3,
   "name": "MHS Grades",
   "icons": {
-    "64":"./interface/assets/logo.png"
+    "64": "./interface/assets/logo.png"
   },
   "version": "0.2.2",
   "description": "MHS Grade is a chrome extension that allows students to track their performance in a more organized and visually appealing way",
   "options_page": "/interface/popup.html",
-  "permissions": [
-    "activeTab",
-    "scripting",
-    "tabs",
-    "storage",
-  ],
-  "host_permissions": [
-    "<all_urls>"
-  ],
+  "permissions": ["activeTab", "scripting", "tabs", "storage"],
+  "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "/interface/popup.html"
   },
@@ -25,12 +18,8 @@
   "content_scripts": [
     {
       "run_at": "document_end",
-      "matches": [
-        "https://maranathahighschool.myschoolapp.com/app/student#studentmyday/progress"
-      ],
-      "js": [
-        "/contentScripts/content.js"
-      ]
+      "matches": ["https://maranathahighschool.myschoolapp.com/app/student"],
+      "js": ["/contentScripts/content.js"]
     }
   ],
   "content_security_policy": {
