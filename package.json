@@ -1,4 +1,7 @@
 {
+  "name":"MHSGrade",
+  "version":"0.2.2",
+  "private":"private",
   "scripts": {
     "dev": "npm run build:clean && npm run build:copy && npm run build:css",
     "build": "npm run build:clean && npm run build:copy && npm run build:css:min",

@@ -8,7 +8,9 @@
  * @description Gets the html of the page and sends it to the background script.
  */
 function waitReady() {
-  if (document.readyState === 'complete') {
+  if (document.readyState === 'complete' &&
+    window.location.hash === '#studentmyday/progress'
+  ) {
     const grades = document.querySelectorAll('h3.showGrade');
     const subjects = document.querySelectorAll('.row .row .col-md-3 a');
     const filteredGrades = [];
