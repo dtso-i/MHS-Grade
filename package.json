@@ -6,8 +6,8 @@
     "dev": "npm run build:clean && npm run build:copy && npm run build:css",
     "build": "npm run build:clean && npm run build:copy && npm run build:css:min",
     "build:clean": "rm -rf dist",
-    "build:css": "tailwindcss -i ./src/interface/styles/tailwind.css -o ./dist/styles/style.css",
-    "build:css:min": "tailwindcss -i ./src/interface/styles/tailwind.css -o ./dist/styles/style.css --minify",
+    "build:css": "tailwindcss -i ./src/interface/assets/styles/tailwind.css -o ./dist/styles/style.css",
+    "build:css:min": "tailwindcss -i ./src/interface/assets/styles/tailwind.css -o ./dist/styles/style.css --minify",
     "build:copy": "cp -R ./src ./dist",
     "lint": "eslint",
     "format": "prettier --write ."
